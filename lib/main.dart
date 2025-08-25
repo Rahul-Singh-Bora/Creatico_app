@@ -5,8 +5,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/services/storage_services.dart';
 import 'features/auth/bloc/auth_bloc.dart';
-
 import 'features/auth/repositories/auth_repository.dart';
+import 'features/idea/bloc/idea_bloc.dart';
+import 'features/idea/data/repositories/repository.dart';
+import 'features/chat/bloc/chat_bloc.dart';
+import 'features/chat/data/repositories/chat_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,15 +31,25 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   final AuthRepository _authRepository = AuthRepository();
+  final IdeasRepository _ideasRepository = IdeasRepository();
+  final ChatRepository _chatRepository = ChatRepository();
 
   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authRepository,
-      child: BlocProvider(
-        create: (_) => AuthBloc(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: _authRepository),
+        RepositoryProvider.value(value: _ideasRepository),
+        RepositoryProvider.value(value: _chatRepository),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => AuthBloc()),
+          BlocProvider(create: (_) => IdeasBloc(_ideasRepository)),
+          BlocProvider(create: (_) => ChatBloc(_chatRepository)),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Creatico',

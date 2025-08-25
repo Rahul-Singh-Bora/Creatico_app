@@ -1,29 +1,23 @@
-class IdeaModel {
+class ChatModel {
   final String id;
   final String userId;
-  final String content;
-  final String platform;
-  final String tone;
+  final String title;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  IdeaModel({
+  ChatModel({
     required this.id,
     required this.userId,
-    required this.content,
-    required this.platform,
-    required this.tone,
+    required this.title,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory IdeaModel.fromJson(Map<String, dynamic> json) {
-    return IdeaModel(
+  factory ChatModel.fromJson(Map<String, dynamic> json) {
+    return ChatModel(
       id: json['id'] ?? '',
       userId: json['userId'] ?? '',
-      content: json['content'] ?? '',
-      platform: json['platform'] ?? '',
-      tone: json['tone'] ?? '',
+      title: json['title'] ?? 'New Chat',
       createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updatedAt'] ?? '') ?? DateTime.now(),
     );
@@ -33,9 +27,7 @@ class IdeaModel {
     return {
       'id': id,
       'userId': userId,
-      'content': content,
-      'platform': platform,
-      'tone': tone,
+      'title': title,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
     };

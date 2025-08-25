@@ -5,6 +5,8 @@ abstract class IdeasEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class LoadIdeas extends IdeasEvent {}
+
 class GenerateIdea extends IdeasEvent {
   final String prompt;
   final String platform;

@@ -24,7 +24,7 @@ class AuthGate extends StatelessWidget {
         }
 
         if (state is AuthAuthenticated) {
-          return const IdeasChatScreen(); // ✅ Your home screen
+          return const IdeaChatScreen(); // ✅ Your home screen
         }
 
         if (state is AuthError) {
